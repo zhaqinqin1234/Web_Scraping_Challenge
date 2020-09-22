@@ -20,7 +20,7 @@
     <!-- Mar news -->
     <div class="row" id="craiglist-listings">
       <div class="col-md-12">
-        <h3 class ="heading">Lastest Mars News</h3>
+        <h3 class ="heading"><strong>Lastest Mars News</strong></h3>
         <h4>{{mars.news_title}}</h4>
         <h5>{{mars.news_para}}</h5>
        
@@ -32,26 +32,23 @@
         <h3 class="heading">Featured Mars Image</h3>
         <img src="{{mars.img_url}}" style ="width: 650px; height: 450px;">
       </div>
-    </div>
+   
     <!-- Mars Facts -->
-    <div class ="row" id = "craiglist-listings">
+    
       <div class="col-md-4">
         <h3 class="heading">Mars Facts</h3>
-        <table border ="1">
-          <tbody>
-
-          </tbody>
-        </table>
+        {{mars.fact | safe}}
+      </div>
     </div>
     <!-- Mars Hemisphers -->
     <div class="row">
       <div class="col-md-12">
         <h3 class="heading" style ="text-align: center;">Mars Hemispheres</h3>
       </div>
-      {% for x in range(4) %}
+      {% for x in mars.hemi_title_img %}
         <div class ="col-md-6" style="border: 1px solid gray;">
-          <img scr="{{mars.hemi_title_img[x]['img_url']}}" style ="width: 450px; height: 450px;">
-          <h5>{{mars.hemi_title_img[x]['img_title']}}</h5>
+          <img src="{{x.img_url}}" style ="width: 450px; height: 450px;">
+          <h5>{{x.img_title}}</h5>
         </div>
 
       {% endfor %}

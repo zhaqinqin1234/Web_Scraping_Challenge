@@ -7,7 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 def init_browser():
-    # @NOTE: Replace the path with your actual path to the chromedriver
+    # initiate browser
     executable_path = {'executable_path': ChromeDriverManager().install()}
     return Browser("chrome", **executable_path, headless=False)
 
@@ -28,15 +28,16 @@ def scrape():
     news_para= slide.find("div", class_="article_teaser_body").get_text()
     mars["news_title"] = news_title
     mars["news_para"] = news_para
+
     # featured image infor
-    img_url = "https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars"
-    browser.visit(img_url)
+    i_url = "https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars"
+    browser.visit(i_url)
     browser.links.find_by_partial_text('FULL IMAGE').click()
     browser.links.find_by_partial_text('more info').click()
     html = browser.html
     img_soup = bs(html, 'html.parser')
     imag = img_soup.find("figure", class_="lede").a['href']
-    imag_url = f'https://www.jpl.nasa.gov{imag}'
+    img_url = f'https://www.jpl.nasa.gov{imag}'
     mars["img_url"]= img_url
 
     # Mars facts
@@ -46,7 +47,8 @@ def scrape():
     mars_table = pd.read_html(url)[0]
     mars_table.columns=['Description', 'Value']
     mars_table.set_index('Description', inplace=True)
-    mars_table.to_html(classes="table table-striped")
+    mars["fact"]=mars_table.to_html(classes="table table-striped")
+    
 
 
     # hemisphere infor
